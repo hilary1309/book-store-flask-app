@@ -23,7 +23,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd frontend
+          cd frontend/bookstore-frontend
           npm install
 
       - name: Build
