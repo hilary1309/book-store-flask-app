@@ -1,0 +1,73 @@
+.App {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+  color: #333;
+  padding: 20px;
+}
+
+.App-header {
+  background-color: #282c34;
+  padding: 20px;
+  color: white;
+}
+
+.App-main {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.AddBookForm {
+  margin-bottom: 20px;
+}
+
+.Form-input {
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: calc(50% - 24px);
+}
+
+.Form-button {
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.Form-button:hover {
+  background-color: #45a049;
+}
+
+.BookList {
+  list-style-type: none;
+  padding: 0;
+}
+
+.BookItem {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.BookTitle {
+  font-weight: bold;
+}
+
+.BookButton {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.BookButton:hover {
+  background-color: #c62828;
+}
