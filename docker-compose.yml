@@ -5,16 +5,18 @@ services:
     build:
       context: ./frontend
     ports:
-      - "3000:5000"
+      - "3000:3000"  # React app typically runs on port 3000
     depends_on:
       - backend
+    environment:
+      - REACT_APP_API_URL=http://backend:5000  # Environment variable for API URL
 
   backend:
     build:
       context: ./backend
     ports:
-      - "5000:5000"
+      - "5000:5000"  # Flask app typically runs on port 5000
     environment:
       - FLASK_ENV=development
     volumes:
-      - ./backend:/app
+      - ./backend:/app  # Optional for development
