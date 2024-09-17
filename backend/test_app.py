@@ -1,21 +1,21 @@
 import pytest
+import mongomock
 from app import app, books_collection
 from bson import ObjectId
 
 @pytest.fixture
 def client():
-    # Use Flask's built-in test client
+    """Flask's built-in test client for making requests."""
     app.config['TESTING'] = True
     with app.test_client() as client:
         yield client
 
-# Helper function to clean up the database after each test
+# Use mongomock to mock the database instead of hitting a real MongoDB instance
 @pytest.fixture(autouse=True)
-def cleanup():
-    # Drop the collection before each test to ensure isolation
-    books_collection.delete_many({})
-    yield
-    books_collection.delete_many({})
+def mock_db():
+    """Mock MongoDB collection using mongomock."""
+    with mongomock.patch(books_collection) as mock_collection:
+        yield mock_collection
 
 def test_get_books_empty(client):
     """Test the GET /books endpoint when no books exist."""
@@ -36,7 +36,7 @@ def test_add_book(client):
     assert data["title"] == new_book["title"]
     assert data["author"] == new_book["author"]
 
-    # Ensure that the book is actually added in the database
+    # Ensure that the book is actually added in the mock database
     book_in_db = books_collection.find_one({"_id": ObjectId(data["id"])})
     assert book_in_db is not None
     assert book_in_db["title"] == new_book["title"]
@@ -52,7 +52,7 @@ def test_add_book_invalid_data(client):
 
 def test_delete_book(client):
     """Test deleting a book using DELETE /books/<id>."""
-    # First, add a book to the database
+    # First, add a book to the mock database
     book_id = books_collection.insert_one({
         "title": "To Kill a Mockingbird",
         "author": "Harper Lee"
@@ -63,13 +63,13 @@ def test_delete_book(client):
     assert response.status_code == 200
     assert response.json == {"message": "Book deleted"}
 
-    # Ensure that the book is actually deleted from the database
+    # Ensure that the book is actually deleted from the mock database
     book_in_db = books_collection.find_one({"_id": book_id})
     assert book_in_db is None
 
 def test_delete_book_not_found(client):
     """Test deleting a non-existent book."""
-    # Use a random ObjectId that doesn't exist in the database
+    # Use a random ObjectId that doesn't exist in the mock database
     response = client.delete(f'/books/{str(ObjectId())}')
     assert response.status_code == 404
     assert response.json == {"message": "Book not found"}
