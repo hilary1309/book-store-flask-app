@@ -27,7 +27,7 @@ jobs:
 
       - name: Build and push frontend image
         run: |
-          cd frontend
+          cd frontend/bookstore-frontend
           docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/frontend:latest .
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/frontend:latest
 
