@@ -28,11 +28,11 @@ jobs:
 
       - name: Build
         run: |
-          cd frontend
+          cd frontend/bookstore-frontend
           npm run build
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v3
         with:
           name: frontend-build
-          path: frontend/build
+          path: frontend/bookstore-frontend/build
