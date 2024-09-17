@@ -3,7 +3,7 @@ version: '3'
 services:
   frontend:
     build:
-      context: ./frontend
+      context: ./frontend/bookstore-frontend
     ports:
       - "3000:3000"  # React app typically runs on port 3000
     depends_on:
